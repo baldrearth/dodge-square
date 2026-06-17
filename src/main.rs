@@ -3,6 +3,9 @@ use bevy::prelude::*;
 #[derive(Component)]
 struct Player;
 
+#[derive(Component)]
+struct Enemy;
+
 const PLAYER_SPEED: f32 = 500.0;
 
 fn main() {
@@ -19,6 +22,11 @@ fn setup(mut commands: Commands) {
         Player,
         Sprite::from_color(Color::srgb(0.3, 0.7, 1.0), Vec2::new(60.0, 60.0)),
         Transform::from_xyz(0.0, -250.0, 0.0),
+    ));
+    commands.spawn((
+        Enemy,
+        Sprite::from_color(Color::srgb(1.0, 0.2, 0.2), Vec2::new(50.0, 50.0)),
+        Transform::from_xyz(0.0, 250.0, 0.0),
     ));
 }
 
