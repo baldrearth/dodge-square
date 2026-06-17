@@ -39,8 +39,8 @@ fn setup(mut commands: Commands) {
             Sprite::from_color(Color::srgb(1.0, 0.2, 0.2), Vec2::new(50.0, 50.0)),
             Transform::from_xyz(
                 random_range(ENEMY_X_MIN..ENEMY_X_MAX),
-                random_range(ENEMY_SPAWN_Y_MIN..ENEMY_SPAWN_Y_MAX), 
-                0.0
+                random_range(ENEMY_SPAWN_Y_MIN..ENEMY_SPAWN_Y_MAX),
+                0.0,
             ),
         ));
     }
