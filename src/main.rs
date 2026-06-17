@@ -57,6 +57,9 @@ fn move_enemy(
 ){
     for mut transform in &mut query{
         transform.translation.y -= ENEMY_SPEED * time.delta_secs();
+        if transform.translation.y < -350.0{
+            transform.translation.y = 350.0;
+        }
     }
 }
 
