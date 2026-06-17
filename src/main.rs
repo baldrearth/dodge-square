@@ -7,12 +7,13 @@ struct Player;
 struct Enemy;
 
 const PLAYER_SPEED: f32 = 500.0;
+const ENEMY_SPEED: f32 = 200.0;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, setup)
-        .add_systems(Update, move_player)
+        .add_systems(Update, (move_player, move_enemy))
         .run();
 }
 
@@ -47,6 +48,15 @@ fn move_player(
         }
 
         transform.translation.x += direction * PLAYER_SPEED * time.delta_secs();
+    }
+}
+
+fn move_enemy(
+    time: Res<Time>,
+    mut query: Query<&mut Transform, With<Enemy>>,
+){
+    for mut transform in &mut query{
+        transform.translation.y -= ENEMY_SPEED * time.delta_secs();
     }
 }
 
