@@ -10,6 +10,10 @@ struct Enemy;
 const PLAYER_SPEED: f32 = 500.0;
 const ENEMY_SPEED: f32 = 200.0;
 
+const PLAYER_X_MIN: f32 = -350.0;
+const PLAYER_X_MAX: f32 = 350.0;
+
+
 const ENEMY_SPAWN_Y_MIN: f32 = 350.0;
 const ENEMY_SPAWN_Y_MAX: f32 = 700.0;
 const ENEMY_RESET_Y: f32 = -350.0;
@@ -63,6 +67,7 @@ fn move_player(
         }
 
         transform.translation.x += direction * PLAYER_SPEED * time.delta_secs();
+        transform.translation.x = transform.translation.x.clamp(PLAYER_X_MIN, PLAYER_X_MAX);
     }
 }
 
