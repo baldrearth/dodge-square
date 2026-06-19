@@ -63,8 +63,12 @@ fn setup(mut commands: Commands) {
 fn move_player(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
+    game_over: Res<GameOver>,
     mut query: Query<&mut Transform, With<Player>>,
 ) {
+    if game_over.is_over{
+        return;
+    }
     for mut transform in &mut query {
         let mut direction = 0.0;
 
@@ -81,8 +85,14 @@ fn move_player(
     }
 }
 
-fn move_enemy(time: Res<Time>, mut query: Query<&mut Transform, With<Enemy>>) {
+fn move_enemy(
+    time: Res<Time>, 
+    game_over: Res<GameOver>,
+    mut query: Query<&mut Transform, With<Enemy>>) {
     for mut transform in &mut query {
+        if game_over.is_over{
+            return;
+        }
         transform.translation.y -= ENEMY_SPEED * time.delta_secs();
         if transform.translation.y < ENEMY_RESET_Y {
             transform.translation.y = random_range(ENEMY_SPAWN_Y_MIN..ENEMY_SPAWN_Y_MAX);
