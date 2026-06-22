@@ -14,7 +14,7 @@ struct GameOver{
 
 
 const PLAYER_SPEED: f32 = 500.0;
-const ENEMY_SPEED: f32 = 200.0;
+const ENEMY_SPEED: f32 = 500.0;
 
 const PLAYER_X_MIN: f32 = -350.0;
 const PLAYER_X_MAX: f32 = 350.0;
@@ -101,10 +101,30 @@ fn move_enemy(
     }
 }
 
+fn spawn_game_over_text(commands: &mut Commands) {
+    commands
+        .spawn(Node {
+            width: percent(100),
+            height: percent(100),
+            align_items: AlignItems::Center,
+            justify_content: JustifyContent::Center,
+            ..default()
+        })
+        .with_child((
+            Text::new("GAME OVER"),
+            TextFont {
+                font_size: 80.0,
+                ..default()
+            },
+            TextColor(Color::srgb(1.0, 1.0, 1.0)),
+        ));
+}
+
 fn check_collision(
     player_query: Query<&Transform, With<Player>>,
     enemy_query: Query<&Transform, With<Enemy>>,
     mut game_over: ResMut<GameOver>,
+    mut commands: Commands,
 ) {
     if game_over.is_over{
         return;
@@ -123,6 +143,7 @@ fn check_collision(
             if x_collision && y_collision {
                 println!("Game Over");
                 game_over.is_over = true;
+                spawn_game_over_text(&mut commands);
             }
         }
     }
